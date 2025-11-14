@@ -13,11 +13,11 @@ public class PensionNavigationPage {
     private WebDriverWait wait;
 
     // ---------- Locators ----------
-    private By pensionMenu = By.xpath("//a[normalize-space()='Pension']");
-    private By pensionSubMenu = By.xpath("//a[contains(text(),'Generate Pension Case')]");
-    private By sevaarthiRadioButton = By.xpath("//input[@type='radio' and @value='2']");
-    private By classOfPensionDropdown = By.id("cmbClassOfPnsn");
-    private By proceedButton = By.id("procceed");
+    private By pensionMenu = By.xpath("(//a[normalize-space()='Pension'])[1]");
+    private By pensionSubMenu = By.xpath("/html/body/div[1]/header/div[3]/nav/div/div[2]/ul[1]/li[3]/ul/li[3]/a");
+    private By sevaarthiRadioButton = By.xpath("/html/body/div[2]/div[2]/fieldset/form/div[1]/div[1]/input[2]");
+    private By classOfPensionDropdown = By.xpath("//*[@id='cmbClassOfPnsn']");
+    private By proceedButton = By.xpath("//*[@id='procceed']");
 
     // ---------- Constructor ----------
     public PensionNavigationPage(WebDriver driver) {
