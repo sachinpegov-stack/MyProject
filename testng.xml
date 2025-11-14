@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Mpension Test Suite" parallel="tests" thread-count="2">
+
+    <!-- ===========================
+          📊 Listeners (MUST be here)
+         =========================== -->
+    <listeners>
+        <listener class-name="com.example.test.listeners.ExtentTestListener"/>
+        <listener class-name="com.example.test.listeners.AllureListener"/>
+    </listeners>
+
+    <!-- ===========================
+          🧭 Chrome Test
+         =========================== -->
+    <test name="PensionFlow_Chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.example.test.pages.MpensionCaseTest"/>
+        </classes>
+    </test>
+
+    <!-- ===========================
+          🧭 Edge Test
+         =========================== -->
+    <test name="PensionFlow_Edge">
+        <parameter name="browser" value="edge"/>
+        <classes>
+            <class name="com.example.test.pages.MpensionCaseTest"/>
+        </classes>
+    </test>
+
+</suite>
