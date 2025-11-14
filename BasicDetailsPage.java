@@ -2,37 +2,23 @@ package com.example.test.pages;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Duration;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.support.ui.Select;
 
 public class BasicDetailsPage {
 
     private WebDriver driver;
-    private WebDriverWait wait;
 
-    // ---------- WAIT SAFE GET ELEMENT ----------
-    private WebElement waitFor(WebElement element) {
-        return wait.until(ExpectedConditions.visibilityOf(element));
-    }
-
-    private WebElement waitToBeClickable(WebElement element) {
-        return wait.until(ExpectedConditions.elementToBeClickable(element));
-    }
-
-    // ---------- Locators ----------
+    // ---------- Page Locators ----------
     @FindBy(id = "txtPnsnrName")
     private WebElement pensionerNameField;
 
-    @FindBy(xpath = "//input[@name='radioMaleFemale' and @value='Male']")
-    private WebElement genderMaleRadio;
-
-    @FindBy(xpath = "//input[@name='radioMaleFemale' and @value='Female']")
-    private WebElement genderFemaleRadio;
+    @FindBy(id = "radioMaleFemale")
+    private WebElement genderRadio;
 
     @FindBy(id = "txtHeight")
     private WebElement heightField;
@@ -64,70 +50,59 @@ public class BasicDetailsPage {
     // ---------- Constructor ----------
     public BasicDetailsPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         PageFactory.initElements(driver, this);
     }
 
-    // ---------- Actions with Waits ----------
+    // ---------- Page Actions ----------
+
     public void enterPensionerName(String name) {
-        waitFor(pensionerNameField).clear();
+        pensionerNameField.clear();
         pensionerNameField.sendKeys(name);
     }
 
-    public void selectGender(String gender) {
-        if (gender.equalsIgnoreCase("Male")) {
-            waitToBeClickable(genderMaleRadio).click();
-        } else {
-            waitToBeClickable(genderFemaleRadio).click();
-        }
+    public void selectGender() {
+        genderRadio.click();
     }
 
     public void enterHeight(String feet, String inches) {
-        waitFor(heightField).clear();
+        heightField.clear();
         heightField.sendKeys(feet);
-
-        waitFor(inchesField).clear();
+        inchesField.clear();
         inchesField.sendKeys(inches);
     }
 
     public void enterDateOfBirth(String dob) {
-        waitFor(dateOfBirthField).clear();
+        dateOfBirthField.clear();
         dateOfBirthField.sendKeys(dob);
     }
 
     public void enterJoiningDate(String joiningDate) {
-        waitFor(joiningDateField).clear();
+        joiningDateField.clear();
         joiningDateField.sendKeys(joiningDate);
     }
 
     public void enterRetirementDate(String retireDate) {
-        waitFor(retirementDateField).clear();
+        retirementDateField.clear();
         retirementDateField.sendKeys(retireDate);
     }
 
     public void selectDesignation(String designation) {
-        Select select = new Select(waitFor(designationDropdown));
+        Select select = new Select(designationDropdown);
         select.selectByVisibleText(designation);
     }
 
     public void selectReligion(String religion) {
-        Select select = new Select(waitFor(religionDropdown));
+        Select select = new Select(religionDropdown);
         select.selectByVisibleText(religion);
     }
 
     public void selectGroup(String group) {
-        Select select = new Select(waitFor(groupDropdown));
+        Select select = new Select(groupDropdown);
         select.selectByVisibleText(group);
     }
 
     public void clickOkButton() {
-        try {
-            waitToBeClickable(okButton).click();
-        } catch (Exception e) {
-            // fallback if popup is slow
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("arguments[0].click();", okButton);
-        }
+        okButton.click();
     }
 
     public void takeScreenshot(String path) throws IOException {
@@ -135,14 +110,15 @@ public class BasicDetailsPage {
         FileUtils.copyFile(src, new File(path));
     }
 
-    // ---------- Main method to fill all details ----------
+    /**
+     * Fill all basic details in one method (optional convenience method)
+     */
     public void fillBasicDetails(String name, String dob, String gender,
                                  String designation, String religion, String group,
                                  String heightFeet, String heightInches,
                                  String joiningDate, String retireDate) throws IOException {
-
         enterPensionerName(name);
-        selectGender(gender);
+        selectGender();
         enterHeight(heightFeet, heightInches);
         enterDateOfBirth(dob);
         enterJoiningDate(joiningDate);
@@ -151,6 +127,6 @@ public class BasicDetailsPage {
         selectReligion(religion);
         selectGroup(group);
         clickOkButton();
-        takeScreenshot("C:\\Users\\sachin.pawar\\Test Data\\screenshot_basic_details.png");
+        takeScreenshot("C:\\Users\\sachin.pawar\\Test Data\\screenshot2.png");
     }
 }
