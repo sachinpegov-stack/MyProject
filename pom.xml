@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.example.test</groupId>
@@ -12,95 +13,87 @@
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+     <selenium.version>4.25.0</selenium.version>
+        <testng.version>7.10.2</testng.version>
+        <webdrivermanager.version>5.9.2</webdrivermanager.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
-	
-	<!-- Allure TestNG -->
-<dependency>
-    <groupId>io.qameta.allure</groupId>
-    <artifactId>allure-testng</artifactId>
-    <version>2.27.0</version>
+   <!-- Selenium Java -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+
+        <!-- Selenium DevTools (closest version for Chrome 142, e.g., v114) -->
+       <dependency>
+  <groupId>org.seleniumhq.selenium</groupId>
+  <artifactId>selenium-devtools-v114</artifactId>
+  <version>4.12.0</version>
 </dependency>
 
-<!-- Allure Rest-Assured support (optional) -->
-<dependency>
-    <groupId>io.qameta.allure</groupId>
-    <artifactId>allure-java-commons</artifactId>
-    <version>2.27.0</version>
-</dependency>
 
-<!-- AssertJ (optional but recommended) -->
-<dependency>
-    <groupId>org.assertj</groupId>
-    <artifactId>assertj-core</artifactId>
-    <version>3.25.3</version>
-</dependency>
+        <!-- TestNG -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-    <!-- ✅ Core Selenium -->
+        <!-- WebDriverManager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+        </dependency>
+
+        <!-- Optional: Apache Commons IO (for screenshots/logging) -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+    <!-- Allure Reporting -->
     <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>4.25.0</version>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-testng</artifactId>
+      <version>2.27.0</version>
     </dependency>
 
-    <!-- ✅ DevTools (Compatible with newer Chrome/Edge) -->
     <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-devtools-v85</artifactId>
-      <version>4.25.0</version>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-java-commons</artifactId>
+      <version>2.27.0</version>
     </dependency>
 
-    <!-- ✅ WebDriverManager (Auto handles browser drivers) -->
-    <dependency>
-      <groupId>io.github.bonigarcia</groupId>
-      <artifactId>webdrivermanager</artifactId>
-      <version>5.9.2</version>
-    </dependency>
-
-    <!-- ✅ Logging -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>2.0.9</version>
-    </dependency>
-
-    <!-- ✅ Extent Reports for HTML test reports -->
+    <!-- Extent Reports -->
     <dependency>
       <groupId>com.aventstack</groupId>
       <artifactId>extentreports</artifactId>
       <version>5.1.1</version>
     </dependency>
 
-    <!-- ✅ TestNG -->
+    <!-- AssertJ -->
     <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>7.10.2</version>
-      <scope>test</scope>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.25.3</version>
     </dependency>
-<!-- SLF4J + Logback -->
-<dependency>
-    <groupId>ch.qos.logback</groupId>
-    <artifactId>logback-classic</artifactId>
-    <version>1.5.6</version>
-</dependency>
 
-
+    <!-- SLF4J + Logback for logging -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.5.6</version>
+    </dependency>
   </dependencies>
 
   <build>
     <plugins>
-		
-		<!-- Allure Maven Plugin -->
-<plugin>
-    <groupId>io.qameta.allure</groupId>
-    <artifactId>allure-maven</artifactId>
-    <version>2.12.0</version>
-</plugin>
-
-      <!-- ✅ Compiler plugin -->
+      <!-- Maven Compiler -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -111,7 +104,7 @@
         </configuration>
       </plugin>
 
-      <!-- ✅ Surefire plugin to execute TestNG tests -->
+      <!-- Maven Surefire Plugin for TestNG -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -122,7 +115,13 @@
           </suiteXmlFiles>
         </configuration>
       </plugin>
+
+      <!-- Allure Maven Plugin -->
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>2.12.0</version>
+      </plugin>
     </plugins>
   </build>
-
 </project>
