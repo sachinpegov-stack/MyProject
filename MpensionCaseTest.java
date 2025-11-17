@@ -78,7 +78,7 @@ public class MpensionCaseTest extends BaseClass {
 
         // Fill the basic details using the Page Object
         basicDetailsPage.fillBasicDetails(
-            "Aditya madhukar Chavhan",      // Name
+            "Sagar Namdev Hajare",      // Name
             "01011965",                     // DOB
             "Male",                         // Gender
             "Junior Clerk",                 // Designation
