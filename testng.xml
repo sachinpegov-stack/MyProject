@@ -14,7 +14,7 @@
     <!-- ===========================
           🧭 Chrome Test
          =========================== -->
-    <test name="PensionFlow_Chrome">
+    <test name="MpensionTest_Chrome">
         <parameter name="browser" value="chrome"/>
         <classes>
             <class name="com.example.test.pages.MpensionCaseTest"/>
@@ -24,7 +24,7 @@
     <!-- ===========================
           🧭 Edge Test
          =========================== -->
-    <test name="PensionFlow_Edge">
+    <test name="MpensionTest_Edge">
         <parameter name="browser" value="edge"/>
         <classes>
             <class name="com.example.test.pages.MpensionCaseTest"/>
