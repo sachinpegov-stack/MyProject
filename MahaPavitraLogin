@@ -1,0 +1,340 @@
+package com.example.demo;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+public class MahaPavitraLogin {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("http://180.149.243.209/GAD/user/login");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // ---------- Close Popup ----------
+        try {
+            WebElement closePopup = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath("//button[@aria-label='Close']"))
+            );
+            closePopup.click();
+            System.out.println("Popup closed!");
+        } catch (Exception e) {
+            System.out.println("Popup not found.");
+        }
+
+        // ---------- Click Login Menu ----------
+        WebElement loginPage = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'लॉगिन')]"))
+        );
+        loginPage.click();
+
+        // ---------- Enter Username ----------
+        WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+        username.sendKeys("ROLE_JSDS_EST020");
+
+        // ---------- Enter Password ----------
+        WebElement password = driver.findElement(By.id("password"));
+        password.sendKeys("ifms123");
+
+        // ---------- Wait for user to enter captcha ----------
+        System.out.println("Please enter captcha manually...");
+        Thread.sleep(8000);
+
+        // ---------- Click Login Button ----------
+        WebElement loginBtn = wait.until(ExpectedConditions.elementToBeClickable(By.id("submit")));
+        loginBtn.click();
+        System.out.println("Login button clicked!");
+
+        Thread.sleep(3000);
+
+        // ---------- Manager Menu ----------
+        WebElement masterBtn = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("(//span[contains(text(),'व्यवस्थापक')])[1]")));
+        masterBtn.click();
+        Thread.sleep(2000);
+
+        // ---------- Open Input Form ----------
+        WebElement inputForm = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//a[@href='/GAD/jsdsest/postVacancy']")));
+        inputForm.click();
+
+        // ---- CADRE DROPDOWN (Select2) ----
+        WebElement cadreDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("select2-cadreId-container")));
+        cadreDropdown.click();
+
+        WebElement cadreOption = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//li[contains(text(),'Demo Forester')]")));
+        cadreOption.click();
+
+        // ---- SELECTION LIST YEAR ----
+        WebElement yearDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("select2-selectionListYear-container")));
+        yearDropdown.click();
+
+        WebElement yearOption = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//li[contains(text(),'2024-2025')]")));
+        yearOption.click();
+
+        // ---- SENIORITY LEVEL ----
+        WebElement seniorityDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("select2-seniorityLevel-container")));
+        seniorityDropdown.click();
+
+        WebElement seniorityOption = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//li[contains(text(),'राज्य स्तर')]")));
+        seniorityOption.click();
+
+
+        // ---------- NEXT BUTTON (TAB 1) ----------
+        WebElement nextBtn1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nextTabBtn")));
+        js.executeScript("arguments[0].scrollIntoView(true);", nextBtn1);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(nextBtn1)).click();
+
+
+        // ---------- Service Access Rule ----------
+        WebElement serviceaccessruleyes = wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("hasServiceAccessRulesYes")));
+        serviceaccessruleyes.click();
+
+        driver.findElement(By.id("serviceEntryRuleDate")).sendKeys("01012024");
+     // Locate the file upload input elements for serviceEntryRuleFileUpload
+     		WebElement serviceEntryRuleFileUpload = driver.findElement(By.xpath("(//input[@id='serviceEntryRuleFile'])[1]" + ""));
+     		serviceEntryRuleFileUpload.sendKeys("D:\\Download\\2mb.pdf");
+     		
+     		
+        driver.findElement(By.id("sanctionedPosts")).sendKeys("100");
+        driver.findElement(By.id("promotionQuota")).sendKeys("50");
+        driver.findElement(By.id("directQuota")).sendKeys("30");
+        driver.findElement(By.id("limitedExamQuota")).sendKeys("20");
+
+        driver.findElement(By.id("lstPromotionQuotaDtlsModel0approvedPosts")).sendKeys("5");
+        driver.findElement(By.id("lstPromotionQuotaDtlsModel0regularPromotionAppointed")).sendKeys("2");
+        driver.findElement(By.id("lstPromotionQuotaDtlsModel0onDeputationOfficer")).sendKeys("2");
+
+        driver.findElement(By.id("lstDirectQuotaDtlsModel0approvedPosts")).sendKeys("3");
+        driver.findElement(By.id("lstDirectQuotaDtlsModel0directlyAppointed")).sendKeys("1");
+        driver.findElement(By.id("lstDirectQuotaDtlsModel0onDeputationOfficer")).sendKeys("1");
+
+        driver.findElement(By.id("sanctionedPosts0")).sendKeys("2");
+        driver.findElement(By.id("filledPosts0")).sendKeys("1");
+
+        driver.findElement(By.id("lstDeputationQuotaDtlsModel0directQuotaCount")).sendKeys("1");
+        driver.findElement(By.id("lstDeputationQuotaDtlsModel0promotionQuotaCount")).sendKeys("1");
+
+
+        // ---------- NEXT BUTTON (TAB 2) ----------
+        WebElement nextBtn2 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nextTabBtn")));
+        js.executeScript("arguments[0].scrollIntoView(true);", nextBtn2);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(nextBtn2)).click();
+
+
+        
+        //--------------Seniority Quata------------------
+                
+        WebElement seniorityYesno = wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("select2-lstSeniorityQuotaDtlsModel0isFinalPublished-container")));
+        seniorityYesno.click();
+
+        WebElement seniorityYesnoDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//li[contains(text(),'होय')]")));
+        seniorityYesnoDropdown.click();
+        
+    
+        WebElement seniorityYear = wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("select2-lstSeniorityQuotaDtlsModel0year-container")));
+        seniorityYear.click();
+
+        WebElement seniorityYearDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//li[contains(text(),'2024')]")));
+        seniorityYearDropdown.click();
+             
+                
+        driver.findElement(By.xpath("(//input[@id='lstSeniorityQuotaDtlsModelpublishDate'])[1]")).sendKeys("01012024");
+        
+        // Locate the file upload input elements for serviceEntryRuleFileUpload
+ 		WebElement lstSeniorityQuotaDtlsModelfilePathUpload = driver.findElement(By.xpath("(//input[@id='lstSeniorityQuotaDtlsModelfilePath'])[1]" + ""));
+ 		lstSeniorityQuotaDtlsModelfilePathUpload.sendKeys("D:\\Download\\2mb.pdf");
+        
+        // ---------- NEXT BUTTON (TAB 3) ----------
+        WebElement nextBtn3 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nextTabBtn")));
+        js.executeScript("arguments[0].scrollIntoView(true);", nextBtn3);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(nextBtn3)).click();
+        
+      //--------------promotion Quata------------------
+        WebElement addRow = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[contains(text(),'+ अ‍ॅड रो')])[8]")));
+        js.executeScript("arguments[0].scrollIntoView(true);", addRow);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(addRow)).click();
+        
+        
+        WebElement promotionType = wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("select2-promotionRecommendingCommittee-container")));
+        promotionType.click();
+
+        WebElement promotionTypeDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//li[contains(text(),'आस्थापना मंडळ')]")));
+        promotionTypeDropdown.click();
+        
+        WebElement selectPromotionyear = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(" (//input[@id='selectionNoBtn'])[1]")));
+        js.executeScript("arguments[0].scrollIntoView(true);", selectPromotionyear);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(selectPromotionyear)).click();
+        
+        
+        WebElement nivadSuchitotalAvailablePost = driver.findElement(By.xpath("(//input[@id='nivadSuchitotalAvailablePost'])[1]" + ""));
+        nivadSuchitotalAvailablePost.sendKeys("10");
+        
+        WebElement nivadSuchiregularPosts = driver.findElement(By.xpath("(//input[@id='nivadSuchiregularPosts'])[1]" + ""));
+        nivadSuchiregularPosts.sendKeys("5");
+        
+        WebElement nivadtemporaryPosts = driver.findElement(By.xpath("(//input[@id='nivadtemporaryPosts'])[1]" + ""));
+        nivadtemporaryPosts.sendKeys("5");
+        
+        
+        WebElement saveDataToSelectionList = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@id='saveDataToSelectionList'])[1]")));
+        js.executeScript("arguments[0].scrollIntoView(true);", saveDataToSelectionList);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(saveDataToSelectionList)).click();
+       
+        
+     // ---------- NEXT BUTTON (TAB 4) ----------
+        WebElement nextBtn4 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nextTabBtn")));
+        js.executeScript("arguments[0].scrollIntoView(true);", nextBtn4);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(nextBtn4)).click();
+        
+     //----------directService-------------------
+        
+        WebElement addRow1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[contains(text(),'+ अ‍ॅड रो')])[10]")));
+        js.executeScript("arguments[0].scrollIntoView(true);", addRow1);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(addRow1)).click();
+        
+        
+        WebElement recruitmentScope = wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("select2-recruitmentScope-container")));
+        recruitmentScope.click();
+
+        WebElement recruitmentScopeDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//li[contains(text(),'महाराष्ट्र लोकसेवा आयोग')]")));
+        recruitmentScopeDropdown.click();
+        
+        
+        WebElement mpscPostDate = driver.findElement(By.xpath("(//input[@id='mpscPostDate'])[1]" + ""));
+        mpscPostDate.sendKeys("01012024");
+        
+        WebElement mpscUploadLetterPath = driver.findElement(By.xpath("(//input[@id='mpscUploadLetterPath'])[1]" + ""));
+        mpscUploadLetterPath.sendKeys("D:\\Download\\2mb.pdf");
+        
+        WebElement recommendedCandidatesCount = driver.findElement(By.xpath("(//input[@id='recommendedCandidatesCount'])[1]" + ""));
+        recommendedCandidatesCount.sendKeys("10");
+        
+        WebElement appointedCandidatesCount = driver.findElement(By.xpath("(//input[@id='appointedCandidatesCount'])[1]" + ""));
+        appointedCandidatesCount.sendKeys("10");
+        
+        WebElement directServiceBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@id='directServiceBtn'])[1]")));
+        js.executeScript("arguments[0].scrollIntoView(true);", directServiceBtn);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(directServiceBtn)).click();
+        
+     // ---------- NEXT BUTTON (TAB 5) ----------
+        WebElement nextBtn5 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nextTabBtn")));
+        js.executeScript("arguments[0].scrollIntoView(true);", nextBtn5);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(nextBtn5)).click();
+        
+ 	
+        
+        //---------------limiteddirectService----------
+        
+        WebElement addRow2 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[contains(text(),'+ अ‍ॅड रो')])[11]")));
+        js.executeScript("arguments[0].scrollIntoView(true);", addRow2);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(addRow2)).click();
+        
+        
+        
+        WebElement limitedExamRecruitmentScope = wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("select2-limitedExamRecruitmentScope-container")));
+        limitedExamRecruitmentScope.click();
+
+        WebElement limitedExamRecruitmentScopeDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//li[contains(text(),'महाराष्ट्र लोकसेवा आयोग')]")));
+        limitedExamRecruitmentScopeDropdown.click();
+        
+        WebElement limitedExamMpscPostDate = driver.findElement(By.xpath("(//input[@id='limitedExamMpscPostDate'])[1]" + ""));
+        limitedExamMpscPostDate.sendKeys("01012024");
+ 		
+        WebElement limitedExamMpscUploadLetterPath = driver.findElement(By.xpath("(//input[@id='limitedExamMpscUploadLetterPath'])[1]" + ""));
+        limitedExamMpscUploadLetterPath.sendKeys("D:\\Download\\2mb.pdf");
+        
+        WebElement limitedExamReCommendedCandidatesCount = driver.findElement(By.xpath("(//input[@id='limitedExamReCommendedCandidatesCount'])[1]" + ""));
+        limitedExamReCommendedCandidatesCount.sendKeys("1");
+        
+        WebElement limitedExamAppointedCandidatesCount = driver.findElement(By.xpath("(//input[@id='limitedExamAppointedCandidatesCount'])[1]" + ""));
+        limitedExamAppointedCandidatesCount.sendKeys("1");
+        
+        
+        
+        WebElement saveLimitedExamTableDraft = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@id='saveLimitedExamTableDraft'])[1]")));
+        js.executeScript("arguments[0].scrollIntoView(true);", saveLimitedExamTableDraft);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(saveLimitedExamTableDraft)).click();
+        
+        
+     // ---------- NEXT BUTTON (TAB 6) ----------
+        WebElement nextBtn6 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nextTabBtn")));
+        js.executeScript("arguments[0].scrollIntoView(true);", nextBtn6);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(nextBtn6)).click();
+        
+        WebElement compassionateAppointmentPositions = driver.findElement(By.xpath("(//input[@id='compassionateAppointmentPositions'])[1]" + ""));
+        compassionateAppointmentPositions.sendKeys("1");
+        
+        
+        WebElement compassionateAppointmentOrdersIssued = driver.findElement(By.xpath("(//input[@id='compassionateAppointmentOrdersIssued'])[1]" + ""));
+        compassionateAppointmentOrdersIssued.sendKeys("1");
+        
+        
+        WebElement compassionateAppointmentJoinedCount = driver.findElement(By.xpath("(//input[@id='compassionateAppointmentJoinedCount'])[1]" + ""));
+        compassionateAppointmentJoinedCount.sendKeys("1");
+        
+        
+     // ---------- Save BUTTON  ----------
+        WebElement save = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@name='save'])[3]")));
+        js.executeScript("arguments[0].scrollIntoView(true);", save);
+        Thread.sleep(800);
+        wait.until(ExpectedConditions.elementToBeClickable(save)).click();
+        
+        // ---------- Click Save ----------
+        WebElement SavePage = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("(//button[contains(text(),'होय, पाठवा!')])[1]"))
+        );
+        SavePage.click();
+        
+        
+ 
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+}
